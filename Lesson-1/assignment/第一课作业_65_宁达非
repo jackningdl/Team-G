@@ -1,0 +1,84 @@
+/*
+ * 第一课作业
+ * by 65_宁达非
+ */
+
+pragma solidity ^0.4.14;
+
+contract Payroll {
+
+////////////////////////////////////////////////////////
+/// 合约创建所需参数 Global variables
+////////////////////////////////////////////////////////
+
+    uint constant payDuration = 10 seconds;
+    uint          salary      = 1 ether;
+    uint          lastPayday  = now;
+    address       owner;
+    address       employee    = 0xca35b7d915458ef540ade6068dfe2f44e8fa733c;
+
+////////////////////////////////////////////////////////
+/// 合约创建所需函数
+////////////////////////////////////////////////////////
+
+    function Payroll() {
+        owner = msg.sender;
+    }
+
+    function addFund() payable returns (uint) {
+        return this.balance;
+    }
+
+    function calculateRunway() returns (uint) {
+        return this.balance / salary;
+    }
+
+    function hasEnoughFund() returns (bool) {
+        return calculateRunway() >= 1;
+    }
+
+    function getPaid() {
+        uint nextPayday = lastPayday + payDuration;
+
+        // 合约需要 1）被支付者地址正确 2）支付时间正确
+        // Tips: 亲测时间用if条件判定比用require效果要好，少消耗 2 gas，sender好像无所谓
+        require(msg.sender == employee);
+        if (nextPayday > now){revert();}
+
+        // 以及：确定本次是否有足够的资金支付
+        require(hasEnoughFund());
+
+        // 如符合支付条件，重制下次支付时间，并支付
+        lastPayday = nextPayday;
+        employee.transfer(salary);
+    }
+
+////////////////////////////////////////////////////////
+/// 作业：创建可调整地址和员工薪水的函数
+////////////////////////////////////////////////////////
+
+// 老板决定在更新员工钱包地之前，给现在的员工按比例把工资发掉
+// 如果员工钱包地址是空，那么直接更换新的员工地址
+
+    function updateEmployee(address newAddr, uint newSal) {
+        require(msg.sender == owner);
+        if (employee != 0x0) {
+            //判定在更换员工钱包地址前，是否有足够的支付资金为当前员工行使支付
+            //如果没有足够资金则抛异常
+            if(hasEnoughFund()){
+                uint payment = salary * (now - lastPayday) / payDuration;
+                employee.transfer(payment);
+            }else{
+              revert();
+            }
+        }
+        employee = newAddr;
+        salary = newSal * 1 ether;
+
+        // 例子里有这行代码，我感觉实际情况下应该是在该老板每次只有一个员工的情况下才合理吧
+        // 除非系统自动识别每个员工当有不同的被支付的时间，也可能是以后才学到，所以就留着吧
+        lastPayday = now;
+    }
+
+}
+
