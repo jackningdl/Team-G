@@ -70,14 +70,14 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
             PayrollInstance.addFund({value: 10000000000})
             return PayrollInstance.employees(accounts[0]);
         }).then(function(Ow){
-            return Ow[2];
+            return Ow[1];
         }).then(function(fund){
             Fund = fund.toNumber();
             PayrollInstance.addEmployee(accounts[7],1,{from:accounts[0]});
         }).then(function(){ 
             return PayrollInstance.employees(accounts[7]);
         }).then(function(empc){ 
-            return empc[2];
+            return empc[1];
         }).then(function(em){ 
             payment_c = em.toNumber();
             console.log(Fund);
