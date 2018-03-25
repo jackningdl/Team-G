@@ -53,9 +53,9 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
         ).then(function(instance){
             PayrollInstance = instance;
             PayrollInstance.addEmployee(accounts[5],1,{from:accounts[0]});
-            employee_c = PayrollInstance.employees(accounts[5]);
-        }).then(()=>{
-            if(employee_c[0] != 0){
+            return PayrollInstance.employees(accounts[5]);
+        }).then(function(returnData){
+            if(returnData[0] != 0){
                 console.log( "         Pass  -> This employee exists.");
             }else{
                 console.log( "         Error -> This employee doesnt exists.");
