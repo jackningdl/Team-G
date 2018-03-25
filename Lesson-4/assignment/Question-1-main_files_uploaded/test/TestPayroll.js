@@ -67,15 +67,15 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
         return Payroll.deployed(
         ).then(function(instance){
             PayrollInstance = instance;
-            PayrollInstance.addFund({value: 10000000})
-            return PayrollInstance.employees.call(accounts[0]);
+            PayrollInstance.addFund({value: 10000000000})
+            return PayrollInstance.employees(accounts[0]);
         }).then(function(Ow){
             return Ow[2];
         }).then(function(fund){
             Fund = fund.toNumber();
-            PayrollInstance.addEmployee.call(accounts[7],1,{from:accounts[0]});
+            PayrollInstance.addEmployee(accounts[7],1,{from:accounts[0]});
         }).then(function(){ 
-            return PayrollInstance.employees.call(accounts[7]);
+            return PayrollInstance.employees(accounts[7]);
         }).then(function(empc){ 
             return empc[2];
         }).then(function(em){ 
