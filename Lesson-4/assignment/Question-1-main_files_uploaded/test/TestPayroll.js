@@ -80,8 +80,8 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
             return empc[1];
         }).then(function(em){ 
             payment_c = em.toNumber();
-            console.log(Fund);
-            console.log(payment_c);
+            //console.log(Fund);
+            //console.log(payment_c);
             return payment_c;
         }).then(()=>{
             if(payment_c <= Fund){
