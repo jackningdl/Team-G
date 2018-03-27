@@ -14,9 +14,13 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
         ).then(function(instance){
             console.log( "\n    1.addEmployee()")
             PayrollInstance = instance;
-            return PayrollInstance.addEmployee(accounts[1],1,{from:accounts[0]});
-        }).then(function(){ console.log( "         Pass  -> msg.sender is Owner.");},
-                function(){ console.log( "         Error -> msg.sender is not Owner.");
+            return instance.owner.call()
+        }).then(function(checkaddress){
+            if(checkaddress == accounts[0]){
+                console.log( "         Pass  -> msg.sender is Owner.");
+            }else{
+                console.log( "         Error -> msg.sender is not Owner.");
+            }
         });
     });
 
@@ -42,9 +46,13 @@ contract('作业:对addEmployee和removeEmployee进行单元测试', function(ac
         ).then(function(instance){
             console.log( "\n    2.removeEmployee()")
             PayrollInstance = instance;
-            return PayrollInstance.addEmployee(accounts[4],1,{from:accounts[0]});
-        }).then(function(){ console.log( "         Pass  -> msg.sender is Owner.");},
-                function(){ console.log( "         Error -> msg.sender is not Owner.");
+            return instance.owner.call()
+        }).then(function(checkaddress){
+            if(checkaddress == accounts[0]){
+                console.log( "         Pass  -> msg.sender is Owner.");
+            }else{
+                console.log( "         Error -> msg.sender is not Owner.");
+            }
         });
     });
 
