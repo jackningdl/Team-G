@@ -2,4 +2,4 @@
 
 项目代码见payroll文件夹，其中除了本地未上传node_module文件夹
 
-本地测试效果见Demo文件夹
+本地测试效果见DemoPicture文件夹
