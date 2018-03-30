@@ -22,7 +22,7 @@ class Employee extends Component {
             console.log(result);
             this.setState({
                 salary:web3.fromWei(result[1].toNumber()),
-                lastPaidDate:new Date(result[2].toNumber()*1000)
+                lastPaidDate:new Date(result[2].toNumber()*1000).toString()
             });
         });
 
@@ -39,7 +39,6 @@ class Employee extends Component {
         const {payroll, account } =this.props;
         payroll.getPaid({
             from:account,
-            gas:1000000000000000 //////////////////////
         }).then((result)=>{
             message.info("You have been paid.");
         });
