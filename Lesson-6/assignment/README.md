@@ -2,5 +2,5 @@
 
 ### 第六课：课后作业
 
-- "payroll" folder submitted.
-- Please notice that I didnt include my inner node_module folder. 
+Only "payroll" folder submitted.    
+Please notice that I didnt include my inner **node_modules** and **build** folder. 
